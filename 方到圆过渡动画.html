@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<body>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="snap.svg/snap.svg-min.js"></script>
+<style>
+	* {margin:0; padding:0;}
+</style>
+
+<svg width="100%" id="svg" height="500px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+
+</svg>
+ <script>
+var svg=Snap("#svg");
+var pathes=[
+    "M37.5,37.5S87.5,37.5,87.5,37.5S137.5,37.5,137.5,37.5S137.5,87.5,137.5,87.5 S137.5,137.5,137.5,137.5S87.5,137.5,87.5,137.5S37.5,137.5,37.5,137.5S37.5,87.5,37.5,87.5S37.5,37.5,37.5,37.5z",
+    "M 37.5,37.5 S47.5,12.5,87.5,12.5 S127.5,25,137.5,37.5 S162.5,47.5,162.5,87.5 S150,127.5,137.5,137.5 S127.5,162.5,87.5,162.5 S47.5,150,37.5,137.5 S12.5,127.5,12.5,87.5 S25,47.5,37.5,37.5z",
+    "M12.5,12.5S87.5,12.5,87.5,12.5S162.5,12.5,162.5,12.5S162.5,87.5,162.5,87.5S162.5,162.5,162.5,162.5S87.5,162.5,87.5,162.5S12.5,162.5,12.5,162.5S12.5,127.5,12.5,127.5S12.5,12.5,12.5,12.5z"
+];
+
+var path=svg.path(pathes[0]);
+path.attr({
+    fill:"#2E70FF"
+});
+function animateIn(callback){
+    path.animate({
+        d:pathes[1]
+    },300,mina.easeout,function(){
+        path.animate({
+            d:pathes[0]
+        },400,mina.elastic,callback)
+    });
+};
+
+function animateOut(callback){
+    path.animate({
+        d:pathes[1]
+    },300,mina.easeout,function(){
+        path.animate({
+            d:pathes[2]
+        },400,mina.elastic,callback)
+    });
+};
+var animating=false,
+    out=true;
+svg.node.addEventListener('click',function(){
+    if(animating)return;
+    animating=true;
+    if(out){
+        animateOut(done);
+    }else{
+        animateIn(done);
+    };
+    function done(){
+        animating=false;
+        out=!out;
+    }
+});
+
+ </script>
+</body>
+</html>
