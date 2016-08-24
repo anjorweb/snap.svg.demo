@@ -6,52 +6,32 @@
 <script src="snap.svg/snap.svg-min.js"></script>
 <style>
 	* {margin:0; padding:0;}
+    @-webkit-keyframes dash{to{stroke-dashoffset:0}
 </style>
 
 <div id="content">
-    <img src="images/router.jpg" alt="">
-    <button id="click">点我开始</button>
 </div>
-
+<br />
+<p>直接在html写入svg，path也可以，画线主要在于stroke-dasharray和stroke-dashoffset的使用</p>
  <script>
 var svg = Snap(500,500);
 $(svg.node).css({
-    float:"left"
+    float:"left",
+    fill:"none",
+    'stroke-linecap':"round",
+    'stroke-width':3,
+    'stroke-dasharray':1000,
+    'stroke-dashoffset':1000,
+    stroke:"#31bae2",
 })
 document.getElementById("content").appendChild(svg.node);
-console.dir(svg);
-$("#click").click(function(){
-    setInterval(function(){
-        addCircle();
-    }, 500);
-});
-function addCircle(){
-    var w = svg.asPX("width")/2;
-    var h = svg.asPX("height")/2;
-    var c = svg.paper.circle(w, h, 5).attr({
-        "fill-opacity":0,
-        stroke:randomColor(),
-        strokeWidth:1
-    });
-    c.animate({
-        r:100,
-        opacity:0
-    }, 2500, mina.linear, function(){
-        this.remove();
-    });
-}
 
-function animateIn(obj, fn){
-    obj.animate({
-        r:obj.asPX("r")*1.4,
-        opacity:0,
-    }, 1000, mina.linear, function(){
-        fn()
-    });
-}
-function randomColor(){
-    return '#'+('00000'+(Math.random()*0x1000000<<0).toString(16)).slice(-6);
-}
+var path = "M2.5 243.903v-72.559c0-5.523 4.477-11.617 10-13.612l428-154.604c5.523-1.995 10 .865 10 6.388v222.109m0 252.051v278.84c0 5.523-4.477 11.617-10 13.612l-428 154.604c-5.523 1.995-10-.865-10-6.388v-72.227";
+var p1 = svg.paper.path(path);
+$(svg.node).css({
+    "-webkit-animation":"dash 1s .5s both"
+})
+
 
  </script>
 </body>

@@ -13,7 +13,9 @@
 </div>
 
  <script>
-var svg = Snap(500,500);
+var svgWidth = 500;
+var svgHeight = 500;
+var svg = Snap(svgWidth,svgHeight);
 $(svg.node).css({
     float:"left",
     background:"#ccc"
@@ -24,6 +26,7 @@ document.getElementById("content").appendChild(svg.node);
 var c1 = svg.paper.circle(30,30,20).attr({
     'opacity':0.5
 });
+var txt1 = svg.paper.text(30,30,"我是圆圈");
 var isMove = false;
 var baseVictor = {
     x:0,
@@ -38,17 +41,23 @@ c1.mousedown(function(ev){
     c1Victor.x = c1.asPX("cx");
     c1Victor.y = c1.asPX("cy");
     isMove = true;
+    txt1.node.innerHTML = '点到我了';
 })
 svg.mousemove(function(ev){
     if(isMove){
         
         var x = ev.clientX - baseVictor.x + c1Victor.x;
         var y = ev.clientY - baseVictor.y + c1Victor.y;
-        c1.attr("cx", x);
-        c1.attr("cy", y);
+
+        c1.attr("cx", Math.max(30, Math.min(x, svgWidth-30)));
+        c1.attr("cy", Math.max(30, Math.min(y, svgHeight-30)));
+        txt1.attr("x", x);
+        txt1.attr("y", y-30);
+        txt1.node.innerHTML = '干嘛拖我';
     }
 }).mouseup(function(){
     isMove = false;
+    txt1.node.innerHTML = '我是圆圈';
 });
  </script>
 </body>
